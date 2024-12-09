@@ -15,47 +15,47 @@ export default function Home() {
       <Navbar />
       
       {/* Section Héro */}
-      <section className="pt-32 pb-20 relative overflow-hidden">
+      <section className="pt-20 md:pt-32 pb-12 md:pb-20 relative overflow-hidden">
         {/* Cercles décoratifs en arrière-plan */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-violet-600/10 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-pink-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-violet-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-pink-600/10 rounded-full blur-3xl"></div>
         </div>
 
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Texte du héro */}
-            <div className="text-center lg:text-left">
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-violet-200 to-pink-200 text-transparent bg-clip-text">
+            <div className="text-center lg:text-left order-2 lg:order-1">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-violet-200 to-pink-200 text-transparent bg-clip-text">
                 Développeur Web Full Stack
               </h1>
-              <p className="text-xl text-violet-200 mb-8 leading-relaxed">
+              <p className="text-lg md:text-xl text-violet-200 mb-6 md:mb-8 leading-relaxed px-4 lg:px-0">
                 Je transforme des idées en applications web modernes et performantes,
                 en utilisant les dernières technologies du marché.
               </p>
-              <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <a
                   href="#projects"
-                  className="px-8 py-3 rounded-full bg-gradient-to-r from-violet-600 to-pink-600 text-white font-semibold hover:from-violet-500 hover:to-pink-500 transition-all transform hover:scale-105"
+                  className="px-6 md:px-8 py-3 rounded-full bg-gradient-to-r from-violet-600 to-pink-600 text-white font-semibold hover:from-violet-500 hover:to-pink-500 transition-all transform hover:scale-105 text-sm md:text-base"
                 >
                   Voir mes projets
                 </a>
                 <a
                   href="#contact"
-                  className="px-8 py-3 rounded-full bg-violet-900/50 text-white font-semibold hover:bg-violet-800/50 transition-all transform hover:scale-105 border border-violet-700/50"
+                  className="px-6 md:px-8 py-3 rounded-full bg-violet-900/50 text-white font-semibold hover:bg-violet-800/50 transition-all transform hover:scale-105 border border-violet-700/50 text-sm md:text-base"
                 >
                   Me contacter
                 </a>
               </div>
               
               {/* Technologies */}
-              <div className="mt-12">
-                <p className="text-violet-300 mb-4">Technologies principales</p>
-                <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+              <div className="mt-8 md:mt-12">
+                <p className="text-violet-300 mb-4 text-sm md:text-base">Technologies principales</p>
+                <div className="flex flex-wrap gap-3 md:gap-4 justify-center lg:justify-start">
                   {['React', 'Next.js', 'TypeScript', 'Node.js', 'Tailwind'].map((tech) => (
                     <span
                       key={tech}
-                      className="px-4 py-2 rounded-full bg-violet-900/30 text-violet-200 border border-violet-700/30"
+                      className="px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-violet-900/30 text-violet-200 border border-violet-700/30 text-sm md:text-base"
                     >
                       {tech}
                     </span>
@@ -65,16 +65,16 @@ export default function Home() {
             </div>
 
             {/* Photo de profil */}
-            <div className="relative">
-              <div className="relative max-w-md mx-auto">
+            <div className="relative order-1 lg:order-2 mb-8 lg:mb-0">
+              <div className="relative max-w-[280px] sm:max-w-[320px] md:max-w-md mx-auto">
                 {/* Cercle décoratif */}
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-600/20 to-pink-600/20 rounded-full blur-2xl"></div>
                 
                 {/* Cadre de la photo */}
                 <div className="relative">
                   {/* Formes décoratives */}
-                  <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-violet-600 to-pink-600 rounded-xl transform rotate-12"></div>
-                  <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-gradient-to-br from-pink-600 to-violet-600 rounded-xl transform -rotate-12"></div>
+                  <div className="absolute -top-4 -right-4 w-16 md:w-24 h-16 md:h-24 bg-gradient-to-br from-violet-600 to-pink-600 rounded-xl transform rotate-12"></div>
+                  <div className="absolute -bottom-4 -left-4 w-16 md:w-24 h-16 md:h-24 bg-gradient-to-br from-pink-600 to-violet-600 rounded-xl transform -rotate-12"></div>
                   
                   {/* Container de la photo */}
                   <div className="relative rounded-2xl overflow-hidden border-4 border-violet-200/20 aspect-square">
@@ -93,14 +93,14 @@ export default function Home() {
                 </div>
 
                 {/* Éléments flottants */}
-                <div className="absolute -right-4 top-1/4 transform rotate-12">
-                  <div className="bg-violet-900/90 backdrop-blur-sm text-violet-200 px-4 py-2 rounded-lg shadow-lg">
+                <div className="absolute -right-2 md:-right-4 top-1/4 transform rotate-12">
+                  <div className="bg-violet-900/90 backdrop-blur-sm text-violet-200 px-3 md:px-4 py-1.5 md:py-2 rounded-lg shadow-lg text-sm md:text-base">
                     <span>💻 Full Stack</span>
                   </div>
                 </div>
-                <div className="absolute -left-4 bottom-1/4 transform -rotate-6">
-                  <div className="bg-pink-900/90 backdrop-blur-sm text-pink-200 px-4 py-2 rounded-lg shadow-lg">
-                    <span>✨ Créatif</span>
+                <div className="absolute -left-2 md:-left-4 bottom-1/4 transform -rotate-12">
+                  <div className="bg-pink-900/90 backdrop-blur-sm text-pink-200 px-3 md:px-4 py-1.5 md:py-2 rounded-lg shadow-lg text-sm md:text-base">
+                    <span>🚀 Passionné</span>
                   </div>
                 </div>
               </div>

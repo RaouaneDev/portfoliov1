@@ -25,20 +25,21 @@ export default function Navbar() {
     <>
       <nav className={`fixed w-full z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-lg backdrop-blur-md py-4' 
-          : 'bg-transparent py-6'
+          ? 'bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-lg backdrop-blur-md py-2 md:py-4' 
+          : 'bg-transparent py-4 md:py-6'
       }`}>
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <Link href="/" className="text-2xl font-bold text-white hover:text-indigo-200 transition-colors">
+            <Link href="/" className="text-xl md:text-2xl font-bold text-white hover:text-indigo-200 transition-colors">
               Portfolio
             </Link>
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden text-white hover:text-indigo-200 z-50 relative"
+              className="md:hidden text-white hover:text-indigo-200 z-50 relative p-2"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
             >
               <svg
                 className="w-6 h-6"
@@ -65,9 +66,13 @@ export default function Navbar() {
             </button>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
               {navigation.map((item) => (
-                <Link key={item.name} href={item.href} className="text-white hover:text-indigo-200 transition-colors">
+                <Link 
+                  key={item.name} 
+                  href={item.href} 
+                  className="text-sm lg:text-base text-white hover:text-indigo-200 transition-colors"
+                >
                   {item.name}
                 </Link>
               ))}
@@ -78,18 +83,18 @@ export default function Navbar() {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 bg-gradient-to-br from-emerald-900 via-teal-800 to-cyan-900 z-40 transition-all duration-500 md:hidden ${
+        className={`fixed inset-0 bg-gradient-to-br from-violet-900 via-purple-900 to-pink-900 z-40 transition-all duration-300 md:hidden ${
           isMobileMenuOpen
             ? 'opacity-100 visible'
-            : 'opacity-0 invisible'
+            : 'opacity-0 invisible pointer-events-none'
         }`}
       >
-        <div className="flex flex-col items-center justify-center h-full space-y-8 text-lg">
+        <div className="flex flex-col items-center justify-center h-full space-y-6">
           {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="text-white hover:text-emerald-300 transition-all transform hover:scale-110 hover:font-medium"
+              className="text-lg text-white hover:text-violet-200 transition-all transform hover:scale-110"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {item.name}
