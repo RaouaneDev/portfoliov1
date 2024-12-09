@@ -141,7 +141,7 @@ export default function Contact() {
                 Restons en contact
               </h3>
               <p className="text-violet-300">
-                N'hésitez pas à me contacter pour discuter de vos projets ou pour toute autre question.
+                N&apos;hésitez pas à me contacter pour discuter de vos projets ou pour toute autre question.
               </p>
             </div>
 

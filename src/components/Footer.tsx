@@ -13,6 +13,7 @@ export default function Footer() {
             <p className="mt-4 text-violet-200">
               Développeur Full Stack passionné par la création d'applications web modernes et performantes.
             </p>
+            <p className="text-sm text-violet-300">Créateur d&apos;expériences web modernes et performantes</p>
           </div>
 
           {/* Liens Rapides */}

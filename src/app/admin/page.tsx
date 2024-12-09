@@ -77,7 +77,7 @@ export default function AdminPage() {
           </div>
 
           <div>
-            <label htmlFor="image" className="block text-violet-200 mb-2">URL de l'image</label>
+            <label htmlFor="image" className="block text-violet-200 mb-2">URL de l&#39;image</label>
             <input
               type="url"
               id="image"
