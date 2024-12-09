@@ -1,9 +1,8 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navigation = [
@@ -13,21 +12,9 @@ export default function Navbar() {
     { name: 'Contact', href: '#contact' }
   ];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <>
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-lg backdrop-blur-md py-2 md:py-4' 
-          : 'bg-transparent py-4 md:py-6'
-      }`}>
+      <nav className="fixed w-full z-50 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 shadow-lg backdrop-blur-md py-2 md:py-4">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             {/* Logo */}
@@ -83,18 +70,18 @@ export default function Navbar() {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 bg-gradient-to-br from-violet-900 via-purple-900 to-pink-900 z-40 transition-all duration-300 md:hidden ${
-          isMobileMenuOpen
-            ? 'opacity-100 visible'
-            : 'opacity-0 invisible pointer-events-none'
+        className={`fixed inset-0 bg-gradient-to-br from-violet-900 via-purple-900 to-pink-900 z-40 transition-transform duration-300 ease-in-out ${
+          isMobileMenuOpen 
+            ? 'translate-x-0' 
+            : 'translate-x-full'
         }`}
       >
-        <div className="flex flex-col items-center justify-center h-full space-y-6">
+        <div className="flex flex-col items-center justify-center min-h-screen space-y-8 p-4">
           {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="text-lg text-white hover:text-violet-200 transition-all transform hover:scale-110"
+              className="text-2xl text-white hover:text-violet-200 transition-all transform hover:scale-110 font-medium"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {item.name}
