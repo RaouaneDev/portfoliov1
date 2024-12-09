@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useProjects } from '@/hooks/useProjects';
+import Image from 'next/image';
 
 export default function AdminPage() {
   const router = useRouter();
@@ -14,27 +15,78 @@ export default function AdminPage() {
     url: '',
     technologies: ''
   });
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+      // Créer une URL pour la prévisualisation
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+    }
+  };
+
+  const uploadFile = async (file: File): Promise<string> => {
+    setIsUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Upload failed');
+      }
+
+      const data = await response.json();
+      return data.filename;
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      throw error;
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Convertir la chaîne de technologies en tableau
-    const technologiesArray = formData.technologies
-      .split(',')
-      .map(tech => tech.trim())
-      .filter(tech => tech !== '');
+    try {
+      let imageUrl = formData.image;
+      
+      // Si un fichier est sélectionné, l'uploader d'abord
+      if (selectedFile) {
+        imageUrl = await uploadFile(selectedFile);
+      }
 
-    // Créer le nouveau projet
-    const newProject = {
-      ...formData,
-      technologies: technologiesArray
-    };
+      // Convertir la chaîne de technologies en tableau
+      const technologiesArray = formData.technologies
+        .split(',')
+        .map(tech => tech.trim())
+        .filter(tech => tech !== '');
 
-    // Ajouter le projet
-    addProject(newProject);
+      // Créer le nouveau projet
+      const newProject = {
+        ...formData,
+        image: imageUrl,
+        technologies: technologiesArray
+      };
 
-    // Rediriger vers la page d'accueil
-    router.push('/');
+      // Ajouter le projet
+      addProject(newProject);
+
+      // Rediriger vers la page d'accueil
+      router.push('/');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Une erreur est survenue lors de l\'ajout du projet');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -77,16 +129,37 @@ export default function AdminPage() {
           </div>
 
           <div>
-            <label htmlFor="image" className="block text-violet-200 mb-2">URL de l&#39;image</label>
-            <input
-              type="url"
-              id="image"
-              name="image"
-              value={formData.image}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded bg-violet-900/50 border border-violet-700 text-white focus:outline-none focus:border-pink-500"
-              required
-            />
+            <label htmlFor="image" className="block text-violet-200 mb-2">Image du projet</label>
+            <div className="space-y-4">
+              <input
+                type="file"
+                id="imageFile"
+                accept="image/*"
+                onChange={handleFileSelect}
+                className="w-full px-4 py-2 rounded bg-violet-900/50 border border-violet-700 text-white focus:outline-none focus:border-pink-500"
+              />
+              <p className="text-violet-300 text-sm">ou</p>
+              <input
+                type="url"
+                id="image"
+                name="image"
+                value={formData.image}
+                onChange={handleChange}
+                placeholder="URL de l'image"
+                className="w-full px-4 py-2 rounded bg-violet-900/50 border border-violet-700 text-white focus:outline-none focus:border-pink-500"
+              />
+              
+              {previewUrl && (
+                <div className="mt-4 relative w-full aspect-video">
+                  <Image
+                    src={previewUrl}
+                    alt="Prévisualisation"
+                    fill
+                    className="object-cover rounded-lg"
+                  />
+                </div>
+              )}
+            </div>
           </div>
 
           <div>
@@ -110,27 +183,21 @@ export default function AdminPage() {
               name="technologies"
               value={formData.technologies}
               onChange={handleChange}
+              placeholder="React, Next.js, TypeScript..."
               className="w-full px-4 py-2 rounded bg-violet-900/50 border border-violet-700 text-white focus:outline-none focus:border-pink-500"
-              placeholder="React, Node.js, TypeScript"
               required
             />
           </div>
 
-          <div className="flex justify-end space-x-4">
-            <button
-              type="button"
-              onClick={() => router.push('/')}
-              className="px-6 py-2 rounded bg-violet-800 text-violet-200 hover:bg-violet-700 transition-colors"
-            >
-              Annuler
-            </button>
-            <button
-              type="submit"
-              className="px-6 py-2 rounded bg-pink-600 text-white hover:bg-pink-500 transition-colors"
-            >
-              Ajouter le projet
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={isUploading}
+            className={`w-full py-3 rounded-lg bg-gradient-to-r from-violet-600 to-pink-600 text-white font-semibold hover:from-violet-500 hover:to-pink-500 transition-all transform hover:scale-105 ${
+              isUploading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+          >
+            {isUploading ? 'Upload en cours...' : 'Ajouter le projet'}
+          </button>
         </form>
       </div>
     </div>
